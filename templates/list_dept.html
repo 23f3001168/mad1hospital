@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Departments</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-4">
+
+    <h3 class="mb-3">Departments</h3>
+
+    <div class="row g-3">
+        {% for d in depts %}
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>{{ d.name }}</h5>
+                <p class="small text-muted">{{ d.desc }}</p>
+
+                <a href="/dept/edit/{{ d.id }}" class="btn btn-outline-primary btn-sm w-100 mb-2">Edit</a>
+                <a href="/dept/delete/{{ d.id }}" class="btn btn-outline-danger btn-sm w-100">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="/admin/dashboard" class="btn btn-secondary mt-4">Back</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Appointments</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">Your Appointments</h2>
+
+    {% if apps %}
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for a in apps %}
+                <tr>
+                    <td>{{ a.date }}</td>
+                    <td>{{ a.time }}</td>
+                    <td>{{ a.patient.user.fname }} {{ a.patient.user.lname }}</td>
+                    <td>
+                        {% if a.status == "Booked" %}
+                            <span class="badge bg-warning">Booked</span>
+                        {% elif a.status == "Completed" %}
+                            <span class="badge bg-success">Completed</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Cancelled</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if a.status == "Booked" %}
+                            <a href="/treatment/add/{{ a.id }}" class="btn btn-sm btn-primary">Add Treatment</a>
+                            <a href="/doctor/cancel/{{ a.id }}" class="btn btn-sm btn-outline-danger">Cancel</a>
+                        {% else %}
+                            <span class="text-muted">No actions</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p class="text-muted">No appointments found.</p>
+    {% endif %}
+
+    <a href="/doctor/dashboard" class="btn btn-secondary mt-3">Back</a>
+
+</div>
+
+</body>
+</html>

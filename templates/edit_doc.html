@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Doctor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-4" style="max-width: 600px;">
+
+    <h3 class="mb-4">Edit Doctor</h3>
+
+    <!-- NEW: Show user ID -->
+    <div class="alert alert-info py-2">
+        <strong>User ID:</strong> {{ usr.id }}
+    </div>
+
+    <form method="POST">
+
+        <label>First Name</label>
+        <input type="text" class="form-control mb-3" name="fname"
+               value="{{ usr.fname }}" required>
+
+        <label>Last Name</label>
+        <input type="text" class="form-control mb-3" name="lname"
+               value="{{ usr.lname }}" required>
+
+        <label>Username</label>
+        <input type="text" class="form-control mb-3" name="username"
+               value="{{ usr.username }}" required>
+
+        <label>Password</label>
+        <input type="text" class="form-control mb-3" name="password"
+               value="{{ usr.password }}" required>
+
+        <label>Specialization</label>
+        <input type="text" class="form-control mb-3" name="spec"
+               value="{{ doc.spec }}" required>
+
+        <label>Department</label>
+        <select name="dept_id" class="form-control mb-3">
+            {% for d in depts %}
+            <option value="{{ d.id }}" {% if d.id == doc.dept_id %}selected{% endif %}>
+                {{ d.name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Bio</label>
+        <textarea class="form-control mb-3" name="bio">{{ doc.bio }}</textarea>
+
+        <button class="btn btn-primary w-100">Update</button>
+    </form>
+
+    <a href="/doctor/list" class="btn btn-secondary mt-3">Back</a>
+
+</div>
+
+</body>
+</html>
