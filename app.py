@@ -2,11 +2,13 @@ from flask import Flask, session, redirect, request, render_template
 from datetime import datetime, timedelta
 from sqlalchemy import cast, String
 from models import db, Department, Doctor, Patient, User, Appointment, Treatment, Availability
+import os
 
 app = Flask(__name__)
-app.secret_key = "some_simple_key"
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///hospital.db"
+app.secret_key = os.environ.get("SECRET_KEY", "dev-fallback-secret")
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "hospital.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
@@ -14,7 +16,9 @@ with app.app_context():
     db.create_all()
     admin = User.query.filter_by(role="admin").first()
     if not admin:
-        admin = User(username="praitAATMA78",password="mh39jmvs",role="admin",fname="Admin",lname="User")
+        admin = User(username=os.environ.get("ADMIN_USER", "admin"),
+             password=os.environ.get("ADMIN_PASS", "admin123"),
+             role="admin")
         db.session.add(admin)
         db.session.commit()
 
