@@ -16,9 +16,14 @@ with app.app_context():
     db.create_all()
     admin = User.query.filter_by(role="admin").first()
     if not admin:
-        admin = User(username=os.environ.get("ADMIN_USER", "admin"),
-             password=os.environ.get("ADMIN_PASS", "admin123"),
-             role="admin")
+        admin = User(
+    username="admin",
+    password="admin123",
+    role="admin",
+    fname="Admin",
+    lname="User",
+    is_active=True
+)
         db.session.add(admin)
         db.session.commit()
 
